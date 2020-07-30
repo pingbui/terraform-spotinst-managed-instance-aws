@@ -64,7 +64,7 @@ variable "perform_at" {
 variable "optimization_windows" {
   type        = list(string)
   description = "When performAt is 'timeWindow': must specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59."
-  desfault    = []
+  default    = []
 }
 
 variable "persist_private_ip" {
@@ -143,11 +143,6 @@ variable "product" {
   default     = "Linux/UNIX"
 }
 
-variable "subnet_ids" {
-  type        = list(string)
-  description = "Comma separated list of available instance types for instance."
-}
-
 variable "preferred_type" {
   type        = string
   description = "Preferred instance types for the instance. We will automatically select optional similar instance types to ensure optimized cost efficiency."
@@ -195,7 +190,7 @@ variable "key_pair" {
 }
 
 variable "tags" {
-  type        = list(map)
+  type        = list(map(string))
   description = "Set tags for the instance. Items should be unique."
   default     = []
 }
@@ -219,7 +214,7 @@ variable "cpu_credits" {
 }
 
 variable "network_interface" {
-  type        = list(map)
+  type        = list(map(string))
   description = "List of network interfaces in the EC2 instance. A primary network interface has a device index of 0"
   default     = [
     {
@@ -231,19 +226,19 @@ variable "network_interface" {
 }
 
 variable "scheduled_task" {
-  type        = list(map)
+  type        = list(map(string))
   description = "List of scheduled tasks"
   default     = []
 }
 
 variable "load_balancers" {
-  type        = list(map)
+  type        = list(map(string))
   description = "List of load balancers"
   default     = []
 }
 
 variable "integration_route53" {
-  type        = list(map)
+  type        = list(map(string))
   description = "Describes the Route53 integration."
   default     = []
 }
