@@ -43,12 +43,6 @@ variable "draining_timeout" {
   default     = "120"
 }
 
-variable "fallback_to_ondemand" {
-  type        = bool
-  description = "In case of no spots available, Managed Instance will launch an On-demand instance instead. Default: 'true'"
-  default     = true
-}
-
 variable "utilize_reserved_instances" {
   type        = bool
   description = "In case of any available Reserved Instances, Managed Instance will utilize them before purchasing Spot instances. Default: 'false'"
@@ -141,6 +135,11 @@ variable "product" {
   type        = string
   description = "Operation system type. Valid values: 'Linux/UNIX', 'SUSE Linux', 'Windows', 'Red Hat Enterprise Linux', 'Linux/UNIX (Amazon VPC)', 'SUSE Linux (Amazon VPC)', 'Windows (Amazon VPC)', 'Red Hat Enterprise Linux (Amazon VPC)'."
   default     = "Linux/UNIX"
+}
+
+variable "instance_types" {
+  type        = list(string)
+  description = "Comma separated list of available instance types for instance."
 }
 
 variable "preferred_type" {

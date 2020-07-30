@@ -11,7 +11,6 @@ resource "spotinst_managed_instance_aws" "this" {
   orientation = var.orientation
 
   draining_timeout           = var.draining_timeout
-  fallback_to_ondemand       = var.fallback_to_ondemand
   utilize_reserved_instances = var.utilize_reserved_instances
 
   revert_to_spot {
@@ -47,6 +46,6 @@ resource "spotinst_managed_instance_aws" "this" {
   user_data            = var.user_data
   shutdown_script      = var.shutdown_script
 
-  tags = var.tags
+  #tags = var.tags
   
 }
