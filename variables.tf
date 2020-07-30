@@ -64,6 +64,7 @@ variable "perform_at" {
 variable "optimization_windows" {
   type        = list(string)
   description = "When performAt is 'timeWindow': must specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59."
+  desfault    = []
 }
 
 variable "persist_private_ip" {
