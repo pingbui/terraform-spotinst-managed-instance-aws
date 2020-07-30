@@ -46,6 +46,54 @@ resource "spotinst_managed_instance_aws" "this" {
   user_data            = var.user_data
   shutdown_script      = var.shutdown_script
 
-  #tags = var.tags
+  ## Network interfaces:
+  dynamic "network_interface" {
+    for_each = var.network_interfaces
+    content {
+      associate_ipv6_address      = lookup(network_interface.value, "associate_ipv6_address", null)
+      associate_public_ip_address = lookup(network_interface.value, "associate_public_ip_address", null)
+      device_index                = lookup(network_interface.value, "device_index", null)
+    }
+  }
+
+  ## Load balancers:
+  dynamic "load_balancers" {
+    for_each = var.load_balancers
+    content {
+      name          = lookup(load_balancers.value, "name", null)
+      arn           = lookup(load_balancers.value, "arn", null)
+      type          = lookup(load_balancers.value, "type", null)
+      balancer_id   = lookup(load_balancers.value, "balancer_id", null)
+      target_set_id = lookup(load_balancers.value, "target_set_id", null)
+      auto_weight   = lookup(load_balancers.value, "auto_weight", null)
+      az_awareness  = lookup(load_balancers.value, "az_awareness", null)
+    }
+  }
+
+  ## Schedules:
+  dynamic "scheduled_task" {
+    for_each = var.scheduled_tasks
+    content {
+      is_enabled      = lookup(scheduled_task.value, "is_enabled", null)
+      task_type       = lookup(scheduled_task.value, "task_type", null)
+      frequency       = lookup(scheduled_task.value, "frequency", null)
+      start_time      = lookup(scheduled_task.value, "start_time", null)
+      cron_expression = lookup(scheduled_task.value, "cron_expression", null)
+    }
+  }
+
+  ## Tags:
+  tags {
+    key   = "Name"
+    value = var.name
+  }
+
+  dynamic "tags" {
+    for_each = var.tags
+    content {
+      key   = lookup(tags.value, "key", null)
+      value = lookup(tags.value, "value", null)
+    }
+  }
   
 }

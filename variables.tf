@@ -212,7 +212,7 @@ variable "cpu_credits" {
   default     = "unlimited"
 }
 
-variable "network_interface" {
+variable "network_interfaces" {
   type        = list(map(string))
   description = "List of network interfaces in the EC2 instance. A primary network interface has a device index of 0"
   default     = [
@@ -224,7 +224,7 @@ variable "network_interface" {
   ]
 }
 
-variable "scheduled_task" {
+variable "scheduled_tasks" {
   type        = list(map(string))
   description = "List of scheduled tasks"
   default     = []
@@ -233,11 +233,5 @@ variable "scheduled_task" {
 variable "load_balancers" {
   type        = list(map(string))
   description = "List of load balancers"
-  default     = []
-}
-
-variable "integration_route53" {
-  type        = list(map(string))
-  description = "Describes the Route53 integration."
   default     = []
 }
