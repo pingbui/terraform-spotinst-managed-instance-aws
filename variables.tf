@@ -131,6 +131,12 @@ variable "elastic_ip" {
   default     = null
 }
 
+variable "create_eip" {
+  type        = bool
+  description = "Whether to create EIP for the managed instance"
+  default     = false
+}
+
 variable "private_ip" {
   type        = string
   description = "Private IP Allocation Id to associate to the instance."
