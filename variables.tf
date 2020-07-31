@@ -247,15 +247,3 @@ variable "load_balancers" {
   description = "List of load balancers"
   default     = []
 }
-
-variable "timeout_create" {
-  type        = string
-  description = "Timeout of creation of the instance"
-  default     = "30m"
-}
-
-variable "timeout_delete" {
-  type        = string
-  description = "Timeout of deletion of the instance"
-  default     = "30m"
-}
