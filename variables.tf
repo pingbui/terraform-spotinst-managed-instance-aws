@@ -43,6 +43,12 @@ variable "draining_timeout" {
   default     = "120"
 }
 
+variable "fall_back_to_od" {
+  type        = bool
+  description = "In case of no spots available, Managed Instance will launch an On-demand instance instead. Default: 'true'"
+  default     = true
+}
+
 variable "utilize_reserved_instances" {
   type        = bool
   description = "In case of any available Reserved Instances, Managed Instance will utilize them before purchasing Spot instances. Default: 'false'"

@@ -11,6 +11,7 @@ resource "spotinst_managed_instance_aws" "this" {
   orientation = var.orientation
 
   draining_timeout           = var.draining_timeout
+  fall_back_to_od            = var.fall_back_to_od
   utilize_reserved_instances = var.utilize_reserved_instances
 
   revert_to_spot {
