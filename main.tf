@@ -96,5 +96,10 @@ resource "spotinst_managed_instance_aws" "this" {
       value = lookup(tags.value, "value", null)
     }
   }
+
+  timeouts {
+    create = var.timeout_create
+    delete = var.timeout_delete
+  }
   
 }
