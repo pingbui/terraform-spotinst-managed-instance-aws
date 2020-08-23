@@ -255,3 +255,9 @@ variable "load_balancers" {
   description = "List of load balancers"
   default     = []
 }
+
+variable "domains" {
+  type        = list(map(string))
+  description = "List of route53 integrations"
+  default     = []
+}
