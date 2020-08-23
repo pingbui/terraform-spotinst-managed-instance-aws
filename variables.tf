@@ -64,7 +64,15 @@ variable "perform_at" {
 variable "optimization_windows" {
   type        = list(string)
   description = "When performAt is 'timeWindow': must specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59."
-  default    = []
+  default    = [
+    "Mon:00:00-Mon:23:59",
+    "Tue:00:00-Tue:23:59",
+    "Wed:00:00-Wed:23:59",
+    "Thu:00:00-Thu:23:59",
+    "Fri:00:00-Fri:23:59",
+    "Sat:00:00-Sat:23:59",
+    "Sun:00:00-Sun:23:59"
+  ]
 }
 
 variable "persist_private_ip" {
@@ -87,8 +95,8 @@ variable "persist_root_device" {
 
 variable "block_devices_mode" {
   type        = string
-  description = "Determine the way we attach the data volumes to the data devices. Valid values: 'reattach', 'onLaunch'. Default: 'onLaunch'"
-  default     = "onLaunch"
+  description = "Determine the way we attach the data volumes to the data devices. Valid values: 'reattach', 'onLaunch'. Default: null"
+  default     = null
 }
 
 variable "health_check_type" {
