@@ -101,7 +101,7 @@ resource "spotinst_managed_instance_aws" "this" {
         record_set_type  = lookup(domains.value, "record_set_type", "a")
 
         record_sets {
-          name           = lookup(domains.value, "record_name")
+          name           = lookup(domains.value, "name")
           use_public_ip  = lookup(domains.value, "use_public_ip", false)
         }
       }
