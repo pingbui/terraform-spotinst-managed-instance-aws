@@ -96,12 +96,12 @@ resource "spotinst_managed_instance_aws" "this" {
     dynamic "domains" {
       for_each = var.domains
       content {
-        hosted_zone_id   = lookup(domains.value, "hosted_zone_id")
+        hosted_zone_id   = lookup(domains.value, "hosted_zone_id", null)
         spotinst_acct_id = lookup(domains.value, "spotinst_acct_id", null)
         record_set_type  = lookup(domains.value, "record_set_type", "a")
 
         record_sets {
-          name           = lookup(domains.value, "name")
+          name           = lookup(domains.value, "name", null)
           use_public_ip  = lookup(domains.value, "use_public_ip", false)
         }
       }
