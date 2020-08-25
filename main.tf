@@ -92,17 +92,18 @@ resource "spotinst_managed_instance_aws" "this" {
   }
 
   ## Route53:
-  integration_route53 {
-    dynamic "domains" {
-      for_each = var.domains
-      content {
-        hosted_zone_id   = lookup(domains.value, "hosted_zone_id", null)
-        spotinst_acct_id = lookup(domains.value, "spotinst_acct_id", null)
-        record_set_type  = lookup(domains.value, "record_set_type", "a")
+  dynamic "integration_route53" {
+    for_each = var.domains
+    content {
+      domains {
+        hosted_zone_id   = lookup(integration_route53.value, "hosted_zone_id")
+        spotinst_acct_id = lookup(integration_route53.value, "spotinst_acct_id", null)
+        record_set_type  = lookup(integration_route53.value, "record_set_type", "a")
 
         record_sets {
-          name           = lookup(domains.value, "name", null)
-          use_public_ip  = lookup(domains.value, "use_public_ip", false)
+          name           = lookup(integration_route53.value, "name")
+          use_public_ip  = lookup(integration_route53.value, "use_public_ip", false)
+          use_public_dns = lookup(integration_route53.value, "use_public_dns", false)
         }
       }
     }
