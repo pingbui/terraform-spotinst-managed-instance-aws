@@ -1,8 +1,14 @@
 terraform {
-  required_version = ">= 0.12.28"
+  required_version = ">= 0.14.0"
 
   required_providers {
-    aws      = ">= 3.35.0"
-    spotinst = ">= 1.45.0"
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 3.39"
+    }
+    spotinst = {
+      source  = "spotinst/spotinst"
+      version = ">= 1.45"
+    }
   }
 }
