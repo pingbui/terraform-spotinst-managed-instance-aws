@@ -4,9 +4,9 @@ provider "spotinst" {
 }
 
 resource "aws_eip" "this" {
-  count  = var.create_eip ? 1 : 0
-  vpc    = true
-  tags   = {
+  count = var.create_eip ? 1 : 0
+  vpc   = true
+  tags = {
     Name = var.name
   }
 }
@@ -38,7 +38,7 @@ resource "spotinst_managed_instance_aws" "this" {
 
   subnet_ids = var.subnet_ids
   vpc_id     = var.vpc_id
-  elastic_ip = var.create_eip ? concat(aws_eip.this.*.id,list(""))[0] : var.elastic_ip
+  elastic_ip = var.create_eip ? concat(aws_eip.this.*.id, list(""))[0] : var.elastic_ip
   private_ip = var.private_ip
 
   instance_types       = var.instance_types
@@ -62,6 +62,21 @@ resource "spotinst_managed_instance_aws" "this" {
       associate_ipv6_address      = lookup(network_interface.value, "associate_ipv6_address", null)
       associate_public_ip_address = lookup(network_interface.value, "associate_public_ip_address", null)
       device_index                = lookup(network_interface.value, "device_index", null)
+    }
+  }
+
+  ## Block devices:
+  dynamic "block_device_mappings" {
+    for_each = var.block_device_mappings
+    content {
+      device_name = lookup(block_device_mappings.value, "device_name")
+      ebs {
+        volume_type           = lookup(block_device_mappings.value, "volume_type", "gp3")
+        volume_size           = lookup(block_device_mappings.value, "volume_size", 20)
+        iops                  = lookup(block_device_mappings.value, "iops", null)
+        throughput            = lookup(block_device_mappings.throughput, "throughput", null)
+        delete_on_termination = lookup(block_device_mappings.value, "delete_on_termination", "true")
+      }
     }
   }
 
@@ -122,5 +137,5 @@ resource "spotinst_managed_instance_aws" "this" {
       value = lookup(tags.value, "value", null)
     }
   }
-  
+
 }

@@ -64,7 +64,7 @@ variable "perform_at" {
 variable "optimization_windows" {
   type        = list(string)
   description = "When performAt is 'timeWindow': must specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59."
-  default    = [
+  default = [
     "Mon:00:00-Mon:23:59",
     "Tue:00:00-Tue:23:59",
     "Wed:00:00-Wed:23:59",
@@ -235,13 +235,19 @@ variable "cpu_credits" {
 variable "network_interfaces" {
   type        = list(map(string))
   description = "List of network interfaces in the EC2 instance. A primary network interface has a device index of 0"
-  default     = [
+  default = [
     {
       device_index                = 0
       associate_ipv6_address      = false
       associate_public_ip_address = null
     }
   ]
+}
+
+variable "block_device_mappings" {
+  type        = list(map(string))
+  description = "List of block devices attached into the EC2 instance."
+  default     = []
 }
 
 variable "scheduled_tasks" {
