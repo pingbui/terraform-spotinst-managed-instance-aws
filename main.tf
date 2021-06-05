@@ -74,7 +74,7 @@ resource "spotinst_managed_instance_aws" "this" {
         volume_type           = lookup(block_device_mappings.value, "volume_type", "gp3")
         volume_size           = lookup(block_device_mappings.value, "volume_size", 20)
         iops                  = lookup(block_device_mappings.value, "iops", null)
-        throughput            = lookup(block_device_mappings.throughput, "throughput", null)
+        throughput            = lookup(block_device_mappings.value, "throughput", null)
         delete_on_termination = lookup(block_device_mappings.value, "delete_on_termination", "true")
       }
     }
