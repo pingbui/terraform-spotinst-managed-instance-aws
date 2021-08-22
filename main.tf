@@ -149,4 +149,12 @@ resource "spotinst_managed_instance_aws" "this" {
     }
   }
 
+  ## Managed instance action:
+  dynamic "managed_instance_action" {
+    for_each = var.managed_instance_action
+    content {
+      type = lookup(managed_instance_action.value, "type", null)
+    }
+  }
+
 }
