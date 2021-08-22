@@ -138,4 +138,15 @@ resource "spotinst_managed_instance_aws" "this" {
     }
   }
 
+  ## Resource tags:
+  dynamic "resource_tag_specification" {
+    for_each = var.resource_tag_specification
+    content {
+      should_tag_enis      = lookup(resource_tag_specification.value, "should_tag_enis", null)
+      should_tag_volumes   = lookup(resource_tag_specification.value, "should_tag_volumes", null)
+      should_tag_snapshots = lookup(resource_tag_specification.value, "should_tag_snapshots", null)
+      should_tag_amis      = lookup(resource_tag_specification.value, "should_tag_amis", null)
+    }
+  }
+
 }

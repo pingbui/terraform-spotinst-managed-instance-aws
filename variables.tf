@@ -267,3 +267,15 @@ variable "domains" {
   description = "List of route53 integrations"
   default     = []
 }
+
+variable "resource_tag_specification" {
+  type        = list(map(string))
+  description = "User will specify which resources should be tagged with group tags."
+  default = [
+    {
+      should_tag_volumes   = true
+      should_tag_snapshots = true
+      should_tag_amis      = true
+    }
+  ]
+}
