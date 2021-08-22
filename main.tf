@@ -38,7 +38,7 @@ resource "spotinst_managed_instance_aws" "this" {
 
   subnet_ids = var.subnet_ids
   vpc_id     = var.vpc_id
-  elastic_ip = var.create_eip ? concat(aws_eip.this.*.id, list(""))[0] : var.elastic_ip
+  elastic_ip = var.create_eip ? concat(aws_eip.this.*.id, [""])[0] : var.elastic_ip
   private_ip = var.private_ip
 
   instance_types       = var.instance_types
