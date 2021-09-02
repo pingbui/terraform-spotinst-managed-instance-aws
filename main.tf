@@ -153,7 +153,7 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "managed_instance_action" {
     for_each = var.managed_instance_action
     content {
-      type = lookup(managed_instance_action.value, "type", null)
+      type = lookup(each.value, "type", null)
     }
   }
 

@@ -281,7 +281,7 @@ variable "resource_tag_specification" {
 }
 
 variable "managed_instance_action" {
-  type        = list(map(string))
+  type        = map(string)
   description = "Managed instance action. With type: 'pause', 'resume', 'recycle'"
-  default     = []
+  default     = {}
 }
