@@ -21,6 +21,7 @@ resource "spotinst_managed_instance_aws" "this" {
   draining_timeout           = var.draining_timeout
   fall_back_to_od            = var.fall_back_to_od
   utilize_reserved_instances = var.utilize_reserved_instances
+  minimum_instance_lifetime  = var.minimum_instance_lifetime
 
   revert_to_spot {
     perform_at = var.perform_at

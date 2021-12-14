@@ -4,14 +4,14 @@
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.46 |
-| <a name="requirement_spotinst"></a> [spotinst](#requirement\_spotinst) | >= 1.56.1 |
+| <a name="requirement_spotinst"></a> [spotinst](#requirement\_spotinst) | >= 1.64.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.46 |
-| <a name="provider_spotinst"></a> [spotinst](#provider\_spotinst) | >= 1.56.1 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.69.0 |
+| <a name="provider_spotinst"></a> [spotinst](#provider\_spotinst) | 1.64.0 |
 
 ## Modules
 
@@ -39,7 +39,7 @@ No modules.
 | <a name="input_ebs_optimized"></a> [ebs\_optimized](#input\_ebs\_optimized) | Enable EBS optimization for supported instance which is not enabled by default. Note - additional charges will be applied. | `bool` | `false` | no |
 | <a name="input_elastic_ip"></a> [elastic\_ip](#input\_elastic\_ip) | Elastic IP Allocation Id to associate to the instance. | `string` | `null` | no |
 | <a name="input_enable_monitoring"></a> [enable\_monitoring](#input\_enable\_monitoring) | Describes whether instance Enhanced Monitoring is enabled. Default: false. | `bool` | `false` | no |
-| <a name="input_fall_back_to_od"></a> [fall\_back\_to\_od](#input\_fall\_back\_to\_od) | In case of no spots available, Managed Instance will launch an On-demand instance instead. Default: 'true' | `bool` | `true` | no |
+| <a name="input_fallback_to_ondemand"></a> [fallback\_to\_ondemand](#input\_fallback\_to\_ondemand) | In case of no spots available, Managed Instance will launch an On-demand instance instead. Default: 'true' | `bool` | `true` | no |
 | <a name="input_grace_period"></a> [grace\_period](#input\_grace\_period) | The amount of time, in seconds, after the instance has launched to starts and check its health. | `string` | `"120"` | no |
 | <a name="input_health_check_type"></a> [health\_check\_type](#input\_health\_check\_type) | The service to use for the health check. Valid values: 'EC2', 'ELB', 'TARGET\_GROUP', 'MULTAI\_TARGET\_SET'. Default: 'EC2'. | `string` | `"EC2"` | no |
 | <a name="input_iam_instance_profile"></a> [iam\_instance\_profile](#input\_iam\_instance\_profile) | Set IAM profile to instance. Set only one of ARN or Name. | `string` | `""` | no |
@@ -49,6 +49,7 @@ No modules.
 | <a name="input_life_cycle"></a> [life\_cycle](#input\_life\_cycle) | Set lifecycle, valid values: 'spot', 'on\_demand'. Default 'spot' | `string` | `"spot"` | no |
 | <a name="input_load_balancers"></a> [load\_balancers](#input\_load\_balancers) | List of load balancers | `list(map(string))` | `[]` | no |
 | <a name="input_managed_instance_action"></a> [managed\_instance\_action](#input\_managed\_instance\_action) | Managed instance action. With type: 'pause', 'resume', 'recycle' | `map(string)` | `{}` | no |
+| <a name="input_minimum_instnace_lifetime"></a> [minimum\_instnace\_lifetime](#input\_minimum\_instnace\_lifetime) | Defines the preferred minimum instance lifetime. Markets which comply with this preference will be prioritized. Optional values: 1, 3, 6, 12, 24 | `string` | `24` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the managed instance | `string` | n/a | yes |
 | <a name="input_network_interfaces"></a> [network\_interfaces](#input\_network\_interfaces) | List of network interfaces in the EC2 instance. A primary network interface has a device index of 0 | `list(map(string))` | <pre>[<br>  {<br>    "associate_ipv6_address": false,<br>    "associate_public_ip_address": null,<br>    "device_index": 0<br>  }<br>]</pre> | no |
 | <a name="input_optimization_windows"></a> [optimization\_windows](#input\_optimization\_windows) | When performAt is 'timeWindow': must specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun \| Mon \| Tue \| Wed \| Thu \| Fri \| Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59. | `list(string)` | <pre>[<br>  "Mon:00:00-Mon:23:59",<br>  "Tue:00:00-Tue:23:59",<br>  "Wed:00:00-Wed:23:59",<br>  "Thu:00:00-Thu:23:59",<br>  "Fri:00:00-Fri:23:59",<br>  "Sat:00:00-Sat:23:59",<br>  "Sun:00:00-Sun:23:59"<br>]</pre> | no |

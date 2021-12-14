@@ -61,6 +61,12 @@ variable "perform_at" {
   default     = "always"
 }
 
+variable "minimum_instance_lifetime" {
+  type        = number
+  description = "Defines the preferred minimum instance lifetime. Markets which comply with this preference will be prioritized. Optional values: 1, 3, 6, 12, 24"
+  default     = 24
+}
+
 variable "optimization_windows" {
   type        = list(string)
   description = "When performAt is 'timeWindow': must specify a list of 'timeWindows' with at least one time window Each string is in the format of - ddd:hh:mm-ddd:hh:mm ddd = day of week = Sun | Mon | Tue | Wed | Thu | Fri | Sat hh = hour 24 = 0 -23 mm = minute = 0 - 59."

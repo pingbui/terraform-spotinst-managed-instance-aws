@@ -8,7 +8,7 @@ terraform {
     }
     spotinst = {
       source  = "spotinst/spotinst"
-      version = ">= 1.56.1"
+      version = ">= 1.64.0"
     }
   }
 }
