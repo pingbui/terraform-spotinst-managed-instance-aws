@@ -9,7 +9,7 @@ output "name" {
 }
 
 output "eip" {
-  value       = concat(aws_eip.this.*.public_ip, [""])[0]
+  value       = try(aws_eip.this[0].public_ip, "")
   description = "The Elastic IP ID of the managed instance"
 }
 

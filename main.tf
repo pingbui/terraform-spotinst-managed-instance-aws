@@ -4,8 +4,8 @@ provider "spotinst" {
 }
 
 resource "aws_eip" "this" {
-  count = var.create_eip ? 1 : 0
-  vpc   = true
+  count  = var.create_eip ? 1 : 0
+  domain = "vpc"
   tags = {
     Name = var.name
   }
@@ -39,7 +39,7 @@ resource "spotinst_managed_instance_aws" "this" {
 
   subnet_ids = var.subnet_ids
   vpc_id     = var.vpc_id
-  elastic_ip = var.create_eip ? concat(aws_eip.this.*.id, [""])[0] : var.elastic_ip
+  elastic_ip = var.create_eip ? try(aws_eip.this[0].id, "") : var.elastic_ip
   private_ip = var.private_ip
 
   instance_types       = var.instance_types
