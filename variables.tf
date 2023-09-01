@@ -148,7 +148,7 @@ variable "elastic_ip" {
 variable "create_eip" {
   type        = bool
   description = "Whether to create EIP for the managed instance"
-  default     = false
+  default     = true
 }
 
 variable "private_ip" {
