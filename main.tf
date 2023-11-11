@@ -70,13 +70,13 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "block_device_mappings" {
     for_each = var.block_device_mappings
     content {
-      device_name = lookup(block_device_mappings.value, "device_name")
+      device_name = try(each.value["device_name"], "/dev/xvda")
       ebs {
-        volume_type           = lookup(block_device_mappings.value, "volume_type", "gp3")
-        volume_size           = lookup(block_device_mappings.value, "volume_size", 20)
-        iops                  = lookup(block_device_mappings.value, "iops", null)
-        throughput            = lookup(block_device_mappings.value, "throughput", null)
-        delete_on_termination = lookup(block_device_mappings.value, "delete_on_termination", "true")
+        volume_type           = try(each.value["volume_type"], "gp3")
+        volume_size           = try(each.value["volume_size"], 20)
+        iops                  = try(each.value["iops"], null)
+        throughput            = try(each.value["throughput"], null)
+        delete_on_termination = try(each.value["delete_on_termination"], true)
       }
     }
   }
@@ -85,13 +85,13 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "load_balancers" {
     for_each = var.load_balancers
     content {
-      name          = lookup(load_balancers.value, "name", null)
-      arn           = lookup(load_balancers.value, "arn", null)
-      type          = lookup(load_balancers.value, "type", null)
-      balancer_id   = lookup(load_balancers.value, "balancer_id", null)
-      target_set_id = lookup(load_balancers.value, "target_set_id", null)
-      auto_weight   = lookup(load_balancers.value, "auto_weight", null)
-      az_awareness  = lookup(load_balancers.value, "az_awareness", null)
+      name          = try(each.value["name"], null)
+      arn           = try(each.value["arn"], null)
+      type          = try(each.value["type"], null)
+      balancer_id   = try(each.value["balancer_id"], null)
+      target_set_id = try(each.value["target_set_id"], null)
+      auto_weight   = try(each.value["auto_weight"], null)
+      az_awareness  = try(each.value["az_awareness"], null)
     }
   }
 
@@ -99,11 +99,11 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "scheduled_task" {
     for_each = var.scheduled_tasks
     content {
-      is_enabled      = lookup(scheduled_task.value, "is_enabled", null)
-      task_type       = lookup(scheduled_task.value, "task_type", null)
-      frequency       = lookup(scheduled_task.value, "frequency", null)
-      start_time      = lookup(scheduled_task.value, "start_time", null)
-      cron_expression = lookup(scheduled_task.value, "cron_expression", null)
+      is_enabled      = try(each.value["is_enabled"], null)
+      task_type       = try(each.value["task_type"], null)
+      frequency       = try(each.value["frequency"], null)
+      start_time      = try(each.value["start_time"], null)
+      cron_expression = try(each.value["cron_expression"], null)
     }
   }
 
@@ -112,14 +112,14 @@ resource "spotinst_managed_instance_aws" "this" {
     for_each = var.domains
     content {
       domains {
-        hosted_zone_id   = lookup(integration_route53.value, "hosted_zone_id")
-        spotinst_acct_id = lookup(integration_route53.value, "spotinst_acct_id", null)
-        record_set_type  = lookup(integration_route53.value, "record_set_type", "a")
+        hosted_zone_id   = try(each.value["hosted_zone_id"])
+        spotinst_acct_id = try(each.value["spotinst_acct_id"], null)
+        record_set_type  = try(each.value["record_set_type"], "a")
 
         record_sets {
-          name           = lookup(integration_route53.value, "name")
-          use_public_ip  = lookup(integration_route53.value, "use_public_ip", false)
-          use_public_dns = lookup(integration_route53.value, "use_public_dns", false)
+          name           = try(each.value["name"])
+          use_public_ip  = try(each.value["use_public_ip"], false)
+          use_public_dns = try(each.value["use_public_dns"], false)
         }
       }
     }
@@ -134,8 +134,8 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "tags" {
     for_each = var.tags
     content {
-      key   = lookup(tags.value, "key", null)
-      value = lookup(tags.value, "value", null)
+      key   = try(each.value["key"], null)
+      value = try(each.value["value"], null)
     }
   }
 
@@ -143,10 +143,10 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "resource_tag_specification" {
     for_each = var.resource_tag_specification
     content {
-      should_tag_enis      = lookup(resource_tag_specification.value, "should_tag_enis", null)
-      should_tag_volumes   = lookup(resource_tag_specification.value, "should_tag_volumes", null)
-      should_tag_snapshots = lookup(resource_tag_specification.value, "should_tag_snapshots", null)
-      should_tag_amis      = lookup(resource_tag_specification.value, "should_tag_amis", null)
+      should_tag_enis      = try(each.value["should_tag_enis"], null)
+      should_tag_volumes   = try(each.value["should_tag_volumes"], null)
+      should_tag_snapshots = try(each.value["should_tag_snapshots"], null)
+      should_tag_amis      = try(each.value["should_tag_amis"], null)
     }
   }
 
@@ -154,7 +154,7 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "managed_instance_action" {
     for_each = var.managed_instance_action
     content {
-      type = lookup(var.managed_instance_action, "type", null)
+      type = try(each.value["type"], null)
     }
   }
 

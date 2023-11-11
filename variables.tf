@@ -235,7 +235,7 @@ variable "shutdown_script" {
 variable "cpu_credits" {
   type        = string
   description = "cpuCredits can have one of two values: 'unlimited', 'standard'. Default: 'unlimited'."
-  default     = "unlimited"
+  default     = "standard"
 }
 
 variable "network_interfaces" {
@@ -244,8 +244,8 @@ variable "network_interfaces" {
   default = [
     {
       device_index                = 0
-      associate_ipv6_address      = false
-      associate_public_ip_address = null
+      associate_ipv6_address      = true
+      associate_public_ip_address = false
     }
   ]
 }

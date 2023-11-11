@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.14.0"
+  required_version = ">= 1.2.0"
 
   required_providers {
     aws = {
@@ -8,7 +8,7 @@ terraform {
     }
     spotinst = {
       source  = "spotinst/spotinst"
-      version = ">= 1.64.0"
+      version = ">= 1.149.0"
     }
   }
 }
