@@ -70,13 +70,13 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "block_device_mappings" {
     for_each = var.block_device_mappings
     content {
-      device_name = try(each.value["device_name"], "/dev/xvda")
+      device_name = try(block_device_mappings.value["device_name"], "/dev/xvda")
       ebs {
-        volume_type           = try(each.value["volume_type"], "gp3")
-        volume_size           = try(each.value["volume_size"], 20)
-        iops                  = try(each.value["iops"], null)
-        throughput            = try(each.value["throughput"], null)
-        delete_on_termination = try(each.value["delete_on_termination"], true)
+        volume_type           = try(block_device_mappings.value["volume_type"], "gp3")
+        volume_size           = try(block_device_mappings.value["volume_size"], 20)
+        iops                  = try(block_device_mappings.value["iops"], null)
+        throughput            = try(block_device_mappings.value["throughput"], null)
+        delete_on_termination = try(block_device_mappings.value["delete_on_termination"], true)
       }
     }
   }
@@ -85,13 +85,13 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "load_balancers" {
     for_each = var.load_balancers
     content {
-      name          = try(each.value["name"], null)
-      arn           = try(each.value["arn"], null)
-      type          = try(each.value["type"], null)
-      balancer_id   = try(each.value["balancer_id"], null)
-      target_set_id = try(each.value["target_set_id"], null)
-      auto_weight   = try(each.value["auto_weight"], null)
-      az_awareness  = try(each.value["az_awareness"], null)
+      name          = try(load_balancers.value["name"], null)
+      arn           = try(load_balancers.value["arn"], null)
+      type          = try(load_balancers.value["type"], null)
+      balancer_id   = try(load_balancers.value["balancer_id"], null)
+      target_set_id = try(load_balancers.value["target_set_id"], null)
+      auto_weight   = try(load_balancers.value["auto_weight"], null)
+      az_awareness  = try(load_balancers.value["az_awareness"], null)
     }
   }
 
@@ -99,11 +99,11 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "scheduled_task" {
     for_each = var.scheduled_tasks
     content {
-      is_enabled      = try(each.value["is_enabled"], null)
-      task_type       = try(each.value["task_type"], null)
-      frequency       = try(each.value["frequency"], null)
-      start_time      = try(each.value["start_time"], null)
-      cron_expression = try(each.value["cron_expression"], null)
+      is_enabled      = try(scheduled_task.value["is_enabled"], null)
+      task_type       = try(scheduled_task.value["task_type"], null)
+      frequency       = try(scheduled_task.value["frequency"], null)
+      start_time      = try(scheduled_task.value["start_time"], null)
+      cron_expression = try(scheduled_task.value["cron_expression"], null)
     }
   }
 
@@ -112,14 +112,14 @@ resource "spotinst_managed_instance_aws" "this" {
     for_each = var.domains
     content {
       domains {
-        hosted_zone_id   = try(each.value["hosted_zone_id"])
-        spotinst_acct_id = try(each.value["spotinst_acct_id"], null)
-        record_set_type  = try(each.value["record_set_type"], "a")
+        hosted_zone_id   = try(integration_route53.value["hosted_zone_id"])
+        spotinst_acct_id = try(integration_route53.value["spotinst_acct_id"], null)
+        record_set_type  = try(integration_route53.value["record_set_type"], "a")
 
         record_sets {
-          name           = try(each.value["name"])
-          use_public_ip  = try(each.value["use_public_ip"], false)
-          use_public_dns = try(each.value["use_public_dns"], false)
+          name           = try(integration_route53.value["name"])
+          use_public_ip  = try(integration_route53.value["use_public_ip"], false)
+          use_public_dns = try(integration_route53.value["use_public_dns"], false)
         }
       }
     }
@@ -134,27 +134,27 @@ resource "spotinst_managed_instance_aws" "this" {
   dynamic "tags" {
     for_each = var.tags
     content {
-      key   = try(each.value["key"], null)
-      value = try(each.value["value"], null)
+      key   = try(tags.value["key"], null)
+      value = try(tags.value["value"], null)
     }
   }
 
   ## Resource tags:
   dynamic "resource_tag_specification" {
-    for_each = var.resource_tag_specification
+    for_each = var.resource_tag_specification == {} ? [] : [1]
     content {
-      should_tag_enis      = try(each.value["should_tag_enis"], null)
-      should_tag_volumes   = try(each.value["should_tag_volumes"], null)
-      should_tag_snapshots = try(each.value["should_tag_snapshots"], null)
-      should_tag_amis      = try(each.value["should_tag_amis"], null)
+      should_tag_enis      = try(var.resource_tag_specification["should_tag_enis"], null)
+      should_tag_volumes   = try(var.resource_tag_specification["should_tag_volumes"], null)
+      should_tag_snapshots = try(var.resource_tag_specification["should_tag_snapshots"], null)
+      should_tag_amis      = try(var.resource_tag_specification["should_tag_amis"], null)
     }
   }
 
   ## Managed instance action:
   dynamic "managed_instance_action" {
-    for_each = var.managed_instance_action
+    for_each = var.managed_instance_action == {} ? [] : [1]
     content {
-      type = try(each.value["type"], null)
+      type = try(var.managed_instance_action["type"], null)
     }
   }
 

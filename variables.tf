@@ -275,15 +275,14 @@ variable "domains" {
 }
 
 variable "resource_tag_specification" {
-  type        = list(map(string))
+  type        = map(string)
   description = "User will specify which resources should be tagged with group tags."
-  default = [
-    {
-      should_tag_volumes   = true
-      should_tag_snapshots = true
-      should_tag_amis      = true
-    }
-  ]
+  default = {
+    should_tag_enis      = true
+    should_tag_volumes   = true
+    should_tag_snapshots = true
+    should_tag_amis      = true
+  }
 }
 
 variable "managed_instance_action" {
