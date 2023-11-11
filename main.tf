@@ -152,7 +152,7 @@ resource "spotinst_managed_instance_aws" "this" {
 
   ## Managed instance action:
   dynamic "managed_instance_action" {
-    for_each = var.managed_instance_action == {} ? [] : [1]
+    for_each = var.managed_instance_action
     content {
       type = try(var.managed_instance_action["type"], null)
     }
